@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -40,4 +42,6 @@ dependencies {
     implementation(libs.converter.gson)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.okhttp)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
 }
