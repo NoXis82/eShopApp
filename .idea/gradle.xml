@@ -9,6 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common-core" />
+            <option value="$PROJECT_DIR$/common-core/domain" />
+            <option value="$PROJECT_DIR$/domain" />
+            <option value="$PROJECT_DIR$/domain/products" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
