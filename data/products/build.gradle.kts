@@ -32,12 +32,6 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.11"
-    }
 }
 
 dependencies {
@@ -49,6 +43,7 @@ dependencies {
     implementation(project(":common-core:network"))
     implementation(project(":common-core:domain"))
     implementation(project(":domain:products"))
+
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
