@@ -21,4 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "EShopApp"
 include(":app")
- 
+include(":domain:products")
+include(":common-core:domain")
