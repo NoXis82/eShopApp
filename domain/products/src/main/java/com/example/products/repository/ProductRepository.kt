@@ -8,4 +8,5 @@ import kotlinx.coroutines.flow.Flow
 interface ProductRepository {
 
     fun getProducts(): Flow<RequestResult<List<Product>, RepositoryError>>
+    fun getProductToById(id: Int): Flow<RequestResult<Product, RepositoryError>>
 }

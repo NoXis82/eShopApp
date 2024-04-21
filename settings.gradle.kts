@@ -23,3 +23,5 @@ rootProject.name = "EShopApp"
 include(":app")
 include(":domain:products")
 include(":common-core:domain")
+include("data:products")
+include("common-core:network")
