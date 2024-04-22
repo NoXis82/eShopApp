@@ -13,10 +13,13 @@
             <option value="$PROJECT_DIR$/common-core" />
             <option value="$PROJECT_DIR$/common-core/domain" />
             <option value="$PROJECT_DIR$/common-core/network" />
+            <option value="$PROJECT_DIR$/common-core/presentation" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/products" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/domain/products" />
+            <option value="$PROJECT_DIR$/presentation" />
+            <option value="$PROJECT_DIR$/presentation/products" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
