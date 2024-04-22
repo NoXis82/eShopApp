@@ -14,7 +14,7 @@ internal fun ProductDto.mapToProduct(): Product {
         description = this.description,
         category = this.category,
         image = this.image,
-        rating = this.ratingDto.mapToRating()
+        rating = this.ratingDto?.mapToRating()
     )
 }
 

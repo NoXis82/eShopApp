@@ -49,6 +49,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    kapt {
+        generateStubs = true
+    }
 }
 
 dependencies {
@@ -65,8 +68,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
 
-    implementation(project(":domain:products"))
-    implementation(project(":common-core:domain"))
+    implementation(project(":presentation:products"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

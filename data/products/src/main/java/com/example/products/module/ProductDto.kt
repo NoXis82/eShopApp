@@ -11,5 +11,5 @@ data class ProductDto(
     @SerialName("description") val description: String,
     @SerialName("category") val category: String,
     @SerialName("image") val image: String,
-    @SerialName("rating") val ratingDto: RatingDto,
+    @SerialName("rating") val ratingDto: RatingDto?,
 )
