@@ -55,6 +55,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.ktx)
 
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.swiperefresh)
 
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

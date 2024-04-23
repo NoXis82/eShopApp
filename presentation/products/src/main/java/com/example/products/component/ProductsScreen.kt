@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +19,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.presentation.LoadingComponent
 import com.example.products.event.ProductsUIEvent
 import com.example.products.viewmodel.ProductsViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun ProductsScreen(
@@ -27,9 +28,13 @@ fun ProductsScreen(
 ) {
     val stateUI by viewModel.uiState.collectAsState()
 
+    val swipeRefreshState = rememberSwipeRefreshState(
+        isRefreshing = stateUI.isRefreshing
+    )
     LaunchedEffect(true) {
         viewModel.onUIEvent(ProductsUIEvent.GetProductList)
     }
+
 
     when {
         stateUI.isLoading -> LoadingComponent()
@@ -41,25 +46,33 @@ fun ProductsScreen(
                 Text(text = stateUI.error.toString())
             }
         }
+
         stateUI.products.isNotEmpty() -> {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    viewModel.onUIEvent(ProductsUIEvent.Refresh)
+                }
             ) {
-                items(stateUI.products.size) { i ->
-                    val item = stateUI.products[i]
-                    ProductItem(
-                        product = item,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { }
-                            .padding(16.dp)
-                    )
-                    if (i < stateUI.products.size) {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(
-                                horizontal = 16.dp
-                            )
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(stateUI.products.size) { i ->
+                        val item = stateUI.products[i]
+                        ProductItem(
+                            product = item,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { }
+                                .padding(16.dp)
                         )
+                        if (i < stateUI.products.size) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(
+                                    horizontal = 16.dp
+                                )
+                            )
+                        }
                     }
                 }
             }
