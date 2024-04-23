@@ -43,5 +43,6 @@ dependencies {
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.okhttp)
     implementation(libs.hilt.android)
+    implementation(project(":common-core:domain"))
     kapt(libs.hilt.android.compiler)
 }

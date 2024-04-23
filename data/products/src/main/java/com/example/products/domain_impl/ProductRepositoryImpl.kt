@@ -2,6 +2,7 @@ package com.example.products.domain_impl
 
 import com.example.domain.util.RepositoryError
 import com.example.domain.util.RequestResult
+import com.example.network.onRepositoryError
 import com.example.products.mapper.mapToProduct
 import com.example.products.model.Product
 import com.example.products.repository.ProductRepository
@@ -22,15 +23,11 @@ class ProductRepositoryImpl @Inject constructor(
             }
             emit(RequestResult.Success(initialData))
         } catch (e: HttpException) {
-            when (e.code()) {
-                404 -> emit(RequestResult.Error(RepositoryError.NetworkError.NO_INTERNET))
-                else -> emit(RequestResult.Error(RepositoryError.NetworkError.SERVER_ERROR))
-            }
+            emit(RequestResult.Error(e.onRepositoryError()))
         } catch (err: IOException) {
-            emit(RequestResult.Error(RepositoryError.NetworkError.SERVER_ERROR))
+            emit(RequestResult.Error(err.onRepositoryError()))
         }
     }
-
 
     override fun getProductToById(id: Int): Flow<RequestResult<Product, RepositoryError>> =
         flow {
@@ -38,12 +35,10 @@ class ProductRepositoryImpl @Inject constructor(
                 val product = productRemote.getProductToById(id).mapToProduct()
                 emit(RequestResult.Success(product))
             } catch (e: HttpException) {
-                when (e.code()) {
-                    404 -> emit(RequestResult.Error(RepositoryError.NetworkError.NO_INTERNET))
-                    else -> emit(RequestResult.Error(RepositoryError.NetworkError.SERVER_ERROR))
-                }
+                emit(RequestResult.Error(e.onRepositoryError()))
             } catch (err: IOException) {
-                emit(RequestResult.Error(RepositoryError.NetworkError.SERVER_ERROR))
+                emit(RequestResult.Error(err.onRepositoryError()))
             }
         }
+
 }
