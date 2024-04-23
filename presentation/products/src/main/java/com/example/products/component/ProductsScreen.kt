@@ -19,18 +19,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.presentation.LoadingComponent
 import com.example.products.event.ProductsUIEvent
 import com.example.products.viewmodel.ProductsViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 
 @Composable
 fun ProductsScreen(
     viewModel: ProductsViewModel = hiltViewModel()
 ) {
     val stateUI by viewModel.uiState.collectAsState()
-//    val swipeRefreshState = rememberSwipeRefreshState(
-      //  isRefreshing = viewModel.state.isRefreshing
-//    )
+
+    val swipeRefreshState = rememberSwipeRefreshState(
+        isRefreshing = stateUI.isRefreshing
+    )
     LaunchedEffect(true) {
         viewModel.onUIEvent(ProductsUIEvent.GetProductList)
     }
+
 
     when {
         stateUI.isLoading -> LoadingComponent()
@@ -42,25 +46,33 @@ fun ProductsScreen(
                 Text(text = stateUI.error.toString())
             }
         }
+
         stateUI.products.isNotEmpty() -> {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize()
+            SwipeRefresh(
+                state = swipeRefreshState,
+                onRefresh = {
+                    viewModel.onUIEvent(ProductsUIEvent.Refresh)
+                }
             ) {
-                items(stateUI.products.size) { i ->
-                    val item = stateUI.products[i]
-                    ProductItem(
-                        product = item,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { }
-                            .padding(16.dp)
-                    )
-                    if (i < stateUI.products.size) {
-                        HorizontalDivider(
-                            modifier = Modifier.padding(
-                                horizontal = 16.dp
-                            )
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    items(stateUI.products.size) { i ->
+                        val item = stateUI.products[i]
+                        ProductItem(
+                            product = item,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { }
+                                .padding(16.dp)
                         )
+                        if (i < stateUI.products.size) {
+                            HorizontalDivider(
+                                modifier = Modifier.padding(
+                                    horizontal = 16.dp
+                                )
+                            )
+                        }
                     }
                 }
             }

@@ -8,5 +8,6 @@ import com.example.products.model.Product
 data class ProductsStateUI(
     val products: List<Product> = emptyList(),
     val isLoading: Boolean = false,
-    val error: RepositoryError? = null
+    val error: RepositoryError? = null,
+    val isRefreshing: Boolean = false
 )

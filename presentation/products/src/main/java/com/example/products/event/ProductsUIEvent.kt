@@ -9,4 +9,7 @@ sealed class ProductsUIEvent {
     data object GetProductList: ProductsUIEvent()
 
     data class ProductClicked(val item: Product) : ProductsUIEvent()
+
+    data object Refresh: ProductsUIEvent()
+
 }
