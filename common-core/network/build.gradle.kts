@@ -39,9 +39,13 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     api(libs.retrofit)
+
     implementation(libs.converter.gson)
     implementation(libs.okhttp.logging.interceptor)
     implementation(libs.okhttp)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.retrofit.converter.moshi)
+
     implementation(libs.hilt.android)
     implementation(project(":common-core:domain"))
     kapt(libs.hilt.android.compiler)
