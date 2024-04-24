@@ -2,7 +2,9 @@ package com.example.products.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.Divider
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
@@ -35,6 +36,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,6 +60,8 @@ fun ProductsScreen(
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
+
+    var isSearchActive by rememberSaveable { mutableStateOf(false) }
 
     val stateUI by viewModel.uiState.collectAsState()
     val swipeRefreshState = rememberSwipeRefreshState(
@@ -116,7 +121,23 @@ fun ProductsScreen(
                 Scaffold(
                     topBar = {
                         TopAppBar(
-                            title = { Text(text = "AppBar") },
+                            title = {
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.SpaceEvenly
+                                ) {
+                                    Text(text = "AppBar")
+                                    EmbeddedSearchBar(
+                                        onQueryChange = {
+
+                                        },
+                                        isSearchActive = isSearchActive,
+                                        onActiveChanged = {
+
+                                        }
+                                    )
+                                }
+                            },
                             colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Gray),
                             navigationIcon = {
                                 IconButton(onClick = {
@@ -126,10 +147,24 @@ fun ProductsScreen(
                                         }
                                     }
                                 }) {
-                                    Icon(imageVector = Icons.Filled.Menu, contentDescription = "menu")
+                                    Icon(
+                                        imageVector = Icons.Filled.Menu,
+                                        contentDescription = "menu"
+                                    )
                                 }
                             }
                         )
+//                            EmbeddedSearchBar(
+//                                onQueryChange = {
+//
+//                                },
+//                                isSearchActive = isSearchActive,
+//                                onActiveChanged = {
+//
+//                                }
+//                            )
+
+
                     }
                 ) { paddingValues ->
                     SwipeRefresh(
